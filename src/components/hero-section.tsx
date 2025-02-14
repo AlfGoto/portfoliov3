@@ -106,7 +106,7 @@ export default function HeroSection() {
               textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
             }}
           >
-            Experienced in AWS backend, Next.js, and CSS DOM manipulation.
+            Experienced in Serverless, Next.js, and CSS DOM manipulation.
             Passionate about backend architecture and creating efficient,
             scalable solutions.
           </Typography>
@@ -168,7 +168,7 @@ export default function HeroSection() {
             }}
           >
             <Link
-              href="https://github.com/yourusername"
+              href="https://github.com/AlfGoto"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -189,7 +189,7 @@ export default function HeroSection() {
               <SiTwitch />
             </Link>
             <Link
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/alfred-gauthier/"
               target="_blank"
               rel="noopener noreferrer"
             >

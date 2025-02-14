@@ -14,9 +14,16 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const mailer = new AdminMailer(process.env.ADMIN_MAILER_KEY);
+    console.log("ADMIN_MAILER_KEY is present:", !!process.env.ADMIN_MAILER_KEY);
+    console.log("Contenu:", contenu);
+    console.log("Sujet:", sujet);
 
-    await mailer.send(contenu).subject(sujet).to("alfgoto@mail.com");
+    const mailer = new AdminMailer(process.env.ADMIN_MAILER_KEY);
+    console.log("Mailer instance created");
+
+    mailer.to("alfgoto@mail.com").subject(sujet).send(contenu);
+
+    console.log("E-mail envoyé");
 
     return NextResponse.json({
       success: true,
