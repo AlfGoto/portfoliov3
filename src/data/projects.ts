@@ -20,7 +20,7 @@ const P: ProjectsType = [
   //   images: [""],
   // },
   {
-    name: "Démineur",
+    name: "Minesweeper",
     description: "",
     images: ["minesweeper1.png", "minesweeper2.png", "minesweeper3.png"],
     banner: "minesweeper1.png",
@@ -41,7 +41,7 @@ const P: ProjectsType = [
     url: "https://towalf.netlify.app/",
   },
   {
-    name: "La 3D",
+    name: "Experiments on 3D",
     description: "",
     images: [
       "portfolio3D1.png",
@@ -53,7 +53,7 @@ const P: ProjectsType = [
     banner: "portfolio3D2.png",
   },
   {
-    name: "Cabinet de curiosité",
+    name: "Some random projects",
     description: "",
     images: [
       "FenetreS1.png",

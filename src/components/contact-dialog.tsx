@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -19,14 +19,37 @@ interface ContactDialogProps {
 export default function ContactDialog({ open, onClose }: ContactDialogProps) {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:your.email@example.com?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(message)}`;
-    window.location.href = mailtoLink;
-    onClose();
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const response = await fetch(
+        `/api/send-mail?contenu=${encodeURIComponent(
+          message
+        )}&sujet=${encodeURIComponent(subject)}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (!response.ok) throw new Error("Échec de l'envoi de l'e-mail");
+
+      setSuccess(true);
+      setSubject("");
+      setMessage("");
+    } catch (error) {
+      // @ts-expect-error 'error' is of type 'unknown'.
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +58,10 @@ export default function ContactDialog({ open, onClose }: ContactDialogProps) {
         <DialogTitle>Contact Me</DialogTitle>
         <DialogContent>
           <Stack spacing={2} sx={{ mt: 1 }}>
+            {error && <div style={{ color: "red" }}>{error}</div>}
+            {success && (
+              <div style={{ color: "green" }}>E-mail send successfully !</div>
+            )}
             <TextField
               label="Subject"
               fullWidth
@@ -54,9 +81,9 @@ export default function ContactDialog({ open, onClose }: ContactDialogProps) {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit" variant="contained">
-            Send Email
+          <Button onClick={onClose}>Close</Button>
+          <Button type="submit" variant="contained" disabled={loading}>
+            {loading ? "Sending..." : "Send Email"}
           </Button>
         </DialogActions>
       </form>
