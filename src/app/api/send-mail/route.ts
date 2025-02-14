@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import AdminMailer from "lowback-admin-mailer";
 
+export const config = {
+  runtime: "nodejs22.x",
+};
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const contenu = searchParams.get("contenu");
     const sujet = searchParams.get("sujet");
+
+    const mailer = new AdminMailer(process.env.ADMIN_MAILER_KEY);
+
+    const token = await mailer.generateToken("alfgoto@gmail.com", sujet, contenu);
+    const response = await fetch("https://mail.basalf.fr/" + token);
+    const data = await response.text();
+    console.log("data:", data);
 
     if (!contenu || !sujet) {
       return NextResponse.json(
@@ -14,10 +25,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const mailer = new AdminMailer(process.env.ADMIN_MAILER_KEY);
-
     mailer.to("alfgoto@mail.com").subject(sujet).send(contenu);
-
 
     return NextResponse.json({
       success: true,
