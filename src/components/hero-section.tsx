@@ -63,7 +63,7 @@ export default function HeroSection() {
           textAlign="center"
         >
           <Avatar
-            src="/placeholder.svg"
+            src="/pp.jpg"
             alt="Alfred Gauthier"
             sx={{
               width: { xs: 120, sm: 150, md: 180 },
