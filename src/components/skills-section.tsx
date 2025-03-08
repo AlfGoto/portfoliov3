@@ -1,19 +1,26 @@
-import { Box, Typography, Grid, Paper } from "@mui/material"
+import { Box, Typography, Grid, Paper } from "@mui/material";
 
 const skills = [
   {
     category: "Frontend",
-    items: ["React", "Next.js", "CSS/SCSS", "DOM Manipulation", "Material-UI"],
+    items: [
+      "React",
+      "Next.js",
+      "CSS",
+      "DOM Manipulation",
+      "Tailwind",
+      "Material Ui",
+    ],
   },
   {
     category: "Backend",
-    items: ["AWS", "Node.js", "Database Design", "API Development", "Architecture"],
+    items: ["AWS", "Supabase", ".NET", "WebSockets", "Architecture"],
   },
   {
     category: "Tools & Others",
-    items: ["Git", "Docker", "CI/CD", "Agile/Scrum", "Testing"],
+    items: ["Git", "Notion", "CI/CD", "Agile/Scrum", "Testing", "Photoshop"],
   },
-]
+];
 
 export default function SkillsSection() {
   return (
@@ -43,7 +50,12 @@ export default function SkillsSection() {
                 },
               }}
             >
-              <Typography variant="h6" component="h3" gutterBottom sx={{ fontSize: { xs: "1.1rem", sm: "1.25rem" } }}>
+              <Typography
+                variant="h6"
+                component="h3"
+                gutterBottom
+                sx={{ fontSize: { xs: "1.1rem", sm: "1.25rem" } }}
+              >
                 {skill.category}
               </Typography>
               <Box
@@ -66,6 +78,5 @@ export default function SkillsSection() {
         ))}
       </Grid>
     </>
-  )
+  );
 }
-

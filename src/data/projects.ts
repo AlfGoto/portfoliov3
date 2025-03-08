@@ -28,7 +28,7 @@ const P: ProjectsType = [
   },
   {
     name: "3Foto",
-    description: "3Foto is the closest i was from running a startup. I knew photographer were in need of a website to pass pictures and to make a selecter between raw files. The main issue was the cost of stocking thousands of 4K image. So i worked on webp compression, raw pictures decrypters. It is made using AWS ans NEXT",
+    description: "3Foto is the closest i was from running a startup. I knew photographers were in need of a website to pass pictures and to make a selecter between raw files. The main issue was the cost of stocking thousands of 4K image. So i worked on webp compression, raw pictures decrypters. It is made using AWS (cdk) and next",
     images: ["home.png", "d.png", "empty home.png"],
     banner: "home.png",
     url: "https://3foto.vercel.app/",

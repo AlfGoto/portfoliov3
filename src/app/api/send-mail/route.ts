@@ -14,9 +14,7 @@ export async function GET(req: NextRequest) {
     const mailer = new AdminMailer(process.env.ADMIN_MAILER_KEY);
 
     const token = await mailer.generateToken("alfgoto@gmail.com", sujet, contenu);
-    const response = await fetch("https://mail.basalf.fr/" + token);
-    const data = await response.text();
-    console.log("data:", data);
+    await fetch("https://mail.basalf.fr/" + token);
 
     if (!contenu || !sujet) {
       return NextResponse.json(

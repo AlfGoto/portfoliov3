@@ -75,9 +75,9 @@ export default function ImageCarousel({ images, banner }: ImageCarouselProps) {
               zIndex: 2,
             }}
             onClick={handlePrevious}
-            size="small"
+            size="medium"
           >
-            <KeyboardArrowLeft fontSize="small" />
+            <KeyboardArrowLeft fontSize="medium" />
           </IconButton>
           <IconButton
             sx={{
@@ -91,9 +91,9 @@ export default function ImageCarousel({ images, banner }: ImageCarouselProps) {
               zIndex: 2,
             }}
             onClick={handleNext}
-            size="small"
+            size="medium"
           >
-            <KeyboardArrowRight fontSize="small" />
+            <KeyboardArrowRight fontSize="medium" />
           </IconButton>
         </>
       )}
