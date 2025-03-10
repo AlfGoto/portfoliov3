@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import type React from "react"; // Added import for React
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
     "TypeScript",
     "React",
     "Node.js",
+    "Alfred",
+    "Gauthier",
   ],
   authors: [{ name: "Alfred Gauthier", url: "https://alfredgauthier.com" }],
   creator: "Alfred Gauthier",
@@ -66,6 +69,8 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    noarchive: false,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -93,6 +98,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script
+        id="json-ld-home"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Alfred Gauthier Portfolio",
+            url: "https://alfredgauthier.com",
+            author: {
+              "@type": "Person",
+              name: "Alfred Gauthier",
+            },
+          }),
+        }}
+      />
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>

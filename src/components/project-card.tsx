@@ -110,19 +110,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </>
       )}
 
-      <CardActions
-        sx={{
-          justifyContent: "space-between",
-          flexDirection: { xs: "column", sm: "row" },
-          gap: { xs: 1, sm: 0 },
-          p: { xs: 2, sm: 3 },
-          pt: { xs: 1, sm: 2 },
-        }}
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
-        {project.url && (
+        <CardActions
+          sx={{
+            justifyContent: "space-between",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: { xs: 1, sm: 0 },
+            p: { xs: 2, sm: 3 },
+            pt: { xs: 1, sm: 2 },
+          }}
+        >
           <Button
             size="small"
-            href={project.url}
+            href={"/" + project.name.toLowerCase().replace(/\s+/g, "-")}
             target="_blank"
             rel="noopener noreferrer"
             fullWidth
@@ -131,10 +133,36 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               width: { xs: "100%", sm: "auto" },
             }}
           >
-            Visit Project
+            See more
           </Button>
-        )}
-      </CardActions>
+        </CardActions>
+
+        <CardActions
+          sx={{
+            justifyContent: "space-between",
+            flexDirection: { xs: "column", sm: "row" },
+            gap: { xs: 1, sm: 0 },
+            p: { xs: 2, sm: 3 },
+            pt: { xs: 1, sm: 2 },
+          }}
+        >
+          {project.url && (
+            <Button
+              size="small"
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              fullWidth
+              variant="outlined"
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+              }}
+            >
+              Visit Project
+            </Button>
+          )}
+        </CardActions>
+      </Box>
     </Card>
   );
 }

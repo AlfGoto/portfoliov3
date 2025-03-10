@@ -1,0 +1,16 @@
+User-agent: *
+Disallow: /api/  # Prevent indexing API routes
+Disallow: /private/  # If you have private pages
+Allow: /  # Allow crawling of everything else
+
+Sitemap: https://alfredgauthier.com/sitemap.xml
+
+User-agent: Googlebot
+Allow: /  # Ensure Google can access all public content
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: *
+Crawl-delay: 10  # Optional: Reduce load on your server
