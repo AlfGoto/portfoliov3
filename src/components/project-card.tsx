@@ -61,7 +61,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           color="text.secondary"
           sx={{ fontSize: { xs: "0.875rem", sm: "1rem" } }}
         >
-          {project.description || "Project description coming soon..."}
+          {project.description
+            ? cutText(project.description)
+            : "Project description coming soon..."}
         </Typography>
       </CardContent>
 
@@ -166,3 +168,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     </Card>
   );
 }
+
+const cutText = (string: string) => {
+  const max = 150;
+  if (string.length < max) return string;
+
+  const charToRemove = [" ", ",", "."];
+  string = string.substring(0, 150);
+
+  charToRemove.forEach((c) => {
+    string = string
+      .substring(0, 150)
+      .split(c)
+      .filter((e) => e)
+      .join(c);
+  });
+  string += "...";
+
+  return string
+};
