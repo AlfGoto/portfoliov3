@@ -33,7 +33,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           project.banner ? `/imgs/${project.name}/${project.banner}` : undefined
         }
       />
-      <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 3 } }}>
+      <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 3 }, pb: "5px !important" }}>
         <Typography
           gutterBottom
           variant="h5"
