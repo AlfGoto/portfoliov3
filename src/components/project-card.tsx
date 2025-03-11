@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import ImageCarousel from "./image-carousel";
 import { Project } from "@/types/project";
+import Link from "next/link";
 
 interface ProjectCardProps {
   project: Project;
@@ -67,19 +68,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             pt: { xs: 1, sm: 2 },
           }}
         >
-          <Button
-            size="small"
+          <Link
             href={"/" + project.name.toLowerCase().replace(/\s+/g, "-")}
+            passHref
             target="_blank"
-            rel="noopener noreferrer"
-            fullWidth
-            variant="outlined"
-            sx={{
-              width: { xs: "100%", sm: "auto" },
-            }}
           >
-            See more
-          </Button>
+            <Button
+              size="small"
+              fullWidth
+              variant="outlined"
+              sx={{
+                width: { xs: "100%", sm: "auto" },
+              }}
+            >
+              See more
+            </Button>
+          </Link>
         </CardActions>
 
         <CardActions

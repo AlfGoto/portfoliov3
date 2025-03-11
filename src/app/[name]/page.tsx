@@ -117,7 +117,8 @@ export default async function ProjectPage({
 }) {
   // Find the project by ID (which is the slugified name)
   const { name } = await params;
-  const project = projects.find(
+  const P = await getReviews();
+  const project = P.find(
     (p) => p.name.toLowerCase().replace(/\s+/g, "-") === name
   );
 
