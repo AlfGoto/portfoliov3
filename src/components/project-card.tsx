@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,10 +5,7 @@ import {
   Box,
   CardActions,
   Button,
-  Collapse,
-  Chip,
 } from "@mui/material";
-import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import ImageCarousel from "./image-carousel";
 import { Project } from "@/types/project";
 
@@ -20,12 +14,6 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const [expanded, setExpanded] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   return (
     <Card
       sx={{
@@ -66,51 +54,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             : "Project description coming soon..."}
         </Typography>
       </CardContent>
-
-      {project.reviews && project.reviews.length > 0 && (
-        <>
-          <CardActions sx={{ px: { xs: 2, sm: 3 }, pb: 0 }}>
-            <Button
-              onClick={handleExpandClick}
-              endIcon={
-                <ExpandMoreIcon
-                  sx={{
-                    transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.2s",
-                  }}
-                />
-              }
-            >
-              See Reviews
-            </Button>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent sx={{ pt: 0 }}>
-              {project.reviews.map((review, index) => (
-                <Box key={index} sx={{ mb: 2, "&:last-child": { mb: 0 } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                    <Typography variant="subtitle2" sx={{ mr: 1 }}>
-                      {review.author}
-                    </Typography>
-                    <Chip
-                      label={review.source}
-                      size="small"
-                      sx={{
-                        height: "20px",
-                        fontSize: "0.75rem",
-                        backgroundColor: "background.paper",
-                      }}
-                    />
-                  </Box>
-                  <Typography variant="body2" color="text.secondary">
-                    {review.review}
-                  </Typography>
-                </Box>
-              ))}
-            </CardContent>
-          </Collapse>
-        </>
-      )}
 
       <Box
         sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
@@ -185,5 +128,5 @@ const cutText = (string: string) => {
   });
   string += "...";
 
-  return string
+  return string;
 };
