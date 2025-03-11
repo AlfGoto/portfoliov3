@@ -2,5 +2,6 @@ export interface Review {
   author: string;
   source: string;
   review: string;
-  projectName: string;
+  projectName?: string;
+  projectname?: string;
 }

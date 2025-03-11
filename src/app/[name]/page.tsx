@@ -24,11 +24,14 @@ import { Project } from "@/types/project";
 import { Review } from "@/types/review";
 import AddReviewButton from "@/components/add-review";
 import { createClient } from "@supabase/supabase-js";
+import { neon } from "@neondatabase/serverless";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_KEY!
 );
+
+const sql = neon(process.env.DATABASE_URL!);
 
 async function getReviews() {
   const projectArr = projects;
@@ -45,6 +48,13 @@ async function getReviews() {
 
       await addReviewsToProjects(Reviews, projectArr, "Supabase");
     })(),
+    (async () => {
+      const Reviews = await sql("SELECT * FROM reviews");
+
+      if (!Reviews) return;
+
+      await addReviewsToProjects(Reviews as Review[], projectArr, "Vercel");
+    })(),
   ]);
   return projectArr;
 }
@@ -57,7 +67,10 @@ async function addReviewsToProjects(
   return Promise.all(
     reviewsArr.map((review) => {
       projectArr.forEach((project) => {
-        if (project.name === review.projectName) {
+        if (
+          project.name === review.projectName ||
+          project.name === review.projectname
+        ) {
           if (!project.reviews) project.reviews = [];
 
           // Prevent duplicates by checking if the review already exists
@@ -80,8 +93,7 @@ export async function generateMetadata({
   params: Promise<{ name: string }>;
 }): Promise<Metadata> {
   const { name } = await params;
-  const P = await getReviews();
-  const project = P.find(
+  const project = projects.find(
     (p) => p.name.toLowerCase().replace(/\s+/g, "-") === name
   );
 
@@ -201,21 +213,23 @@ export default async function ProjectPage({
                 {project.description}
               </Typography>
 
-              {project.url && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  endIcon={<OpenInNewIcon />}
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{ mt: 2 }}
-                >
-                  Visit Project
-                </Button>
-              )}
+              <Box sx={{display: "flex", gap: 3}}>
+                {project.url && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    endIcon={<OpenInNewIcon />}
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ mt: 2 }}
+                  >
+                    Visit Project
+                  </Button>
+                )}
+                <AddReviewButton projectName={project.name} />
+              </Box>
 
-              <AddReviewButton projectName={project.name} />
               <CardContent sx={{ pt: 3, pb: 3 }}>
                 {project.reviews!.length > 0 ? (
                   <Stack spacing={2.5}>

@@ -23,7 +23,10 @@ export const metadata: Metadata = {
     "React",
     "Node.js",
     "Alfred",
-    "Gauthier",
+    "Alfred Gauthier",
+    "Gauthier Alfred",
+    "portfolio",
+    "Portfolio"
   ],
   authors: [{ name: "Alfred Gauthier", url: "https://alfredgauthier.com" }],
   creator: "Alfred Gauthier",

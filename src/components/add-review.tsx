@@ -20,7 +20,8 @@ import {
   type SelectChangeEvent,
 } from "@mui/material";
 import { AddComment as AddCommentIcon } from "@mui/icons-material";
-import addReview from "@/lib/supabase-add-review";
+import addSupabaseReview from "@/lib/supabase-add-review";
+import addVercelReview from "@/lib/neon-add-review";
 
 interface AddReviewProps {
   projectName: string;
@@ -85,7 +86,7 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
         handleClose();
       } else if (source === "Supabase") {
         try {
-          await addReview(author, review, projectName);
+          await addSupabaseReview(author, review, projectName);
 
           setSuccess(true);
           handleClose();
@@ -93,6 +94,11 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
         } catch (error: any) {
           throw new Error("Failed to add review");
         }
+      } else if (source === "Vercel") {
+        await addVercelReview(author, review, projectName);
+
+        setSuccess(true);
+        handleClose();
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -112,6 +118,7 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
           borderRadius: 2,
           textTransform: "none",
           fontWeight: 500,
+          mt: 2,
         }}
       >
         Add Review
@@ -145,8 +152,11 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
                   label="Source"
                   onChange={handleSourceChange}
                 >
-                  <MenuItem value="AWS">AWS</MenuItem>
-                  <MenuItem value="Supabase">Supabase</MenuItem>
+                  {["AWS", "Supabase", "Vercel"].map((v) => (
+                    <MenuItem key={v} value={v}>
+                      {v}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
 
