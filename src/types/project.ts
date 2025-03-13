@@ -19,5 +19,6 @@ export interface Project {
     | "Mui"
     | "Tailwind"
     | ".NET"
+    | "Neon"
   )[];
 }

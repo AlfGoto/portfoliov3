@@ -2,12 +2,23 @@ import type { Project } from "@/types/project";
 
 const P: ProjectsType = [
   {
-    name: "Lowback",
-    description:
-      "Lowback is my most ambitious project. With some friend we are building a Backend as a service. I did a lot of research to find the best architecture possible for our need and our usages. And so we use dotnet with a microservice oriented architecture. We also create packages and interfaces. I also made the deployement strategy. I use a VPS with subdomains, httpd, progresql, systemctl services...",
-    images: ["dotnet.png"],
-    banner: "dotnet.png",
-    languages: [".NET", "NEXT"],
+    name: "This portfolio",
+    description: `This is the latest portfolio I've created. I believe the GitHub repository is named something like portfoliov3, but this must be at least the fifth version.<br>I experimented with some 3D design and pre-designed layouts/themes, but ultimately, I settled on this clean and simple design. My goal was to keep the focus on the projects rather than the design itself.
+    <br><br>One crucial thing about this portfolio is that it will be reviewed by my school to evaluate my skills and determine if I deserve my diploma.<br>The school's instructions weren't particularly clear or precise, which meant I had to interpret them quite a bit. But that actually worked in my favor—it's the kind of challenge that motivates me the most!
+    <br><br>To structure my projects, I stored them as an array of objects, ensuring consistency.<br>This way, I only needed to create reusable components and pages, then iterate through the projects to generate them dynamically.<br>It's a simple trick, but it makes things so much easier. For example, the project pages exist solely as dynamic routes based on a variable URL.
+    <br><br>Due to school requirements, I had to integrate a backend system, so I came up with an idea: a review system where users could select the platform where their review would be posted.<br>For instance, you could leave a review on AWS or Supabase, and when displayed, it would indicate the source.<br>It's a quirky but fun feature that I really like! It also taught me a lot about Vercel integrations (like Neon), and I quickly built an API using AWS while also incorporating Supabase.
+    <br><br>Additionally, we needed to implement an email contact form.<br>With my friend from LowBack, we developed an admin-only email sender using .NET and an NPM package that works exceptionally well!<br>
+    `,
+    images: [
+      "banner.png",
+      "home.png",
+      "project.png",
+      "projects-code.png",
+      "reviews.png",
+      "review-chose.png",
+    ],
+    banner: "banner.png",
+    languages: ["AWS", "NEXT", "Mui", "Neon"],
   },
   {
     name: "Sezame",
@@ -15,18 +26,20 @@ const P: ProjectsType = [
     <br><br>One of the first things I learned was how to work within a diverse team—not just developers, but also sales, marketing, and other professionals. Before this, I had only worked with other devs, so it was a refreshing experience. I also got to experience what it feels like to be "the new guy" and to work alongside people with 10 times my skills. Back in school, I was always the leader and top performer, but here, I had to learn how to follow directions from more experienced colleagues and effectively communicate feedback on my work.
     <br><br>I also learned what it truly means to be a developer. As I mentioned, I discovered the importance and comfort of writing tests. CI completely changed the way I code—it saves so much time! Initially, I was completely lost when starting with AWS and AWS CDK, but as I got the hang of it, it became incredibly satisfying to build exactly what I wanted. AWS is extremely powerful and useful, and it has now become my favorite serverless tool.
     <br><br>This experience also made me realize my strong interest in architecture. We designed our own architectural solutions and build systems, which I found fascinating. It inspired me to dive deeper into learning about software architecture.
-    <br><br>Of course, I also learned what it means to work at a startup. Every decision had to be made with precision because a single mistake could cost us a lot—and for a startup, losing too much could mean the end of the company. But there were also incredible upsides. Every success felt like our success. Moving to a better office was incredibly satisfying, and I got to befriend some truly amazing people. This experience didn’t just make me a better developer—it made me a better person.
+    <br><br>Of course, I also learned what it means to work at a startup. Every decision had to be made with precision because a single mistake could cost us a lot—and for a startup, losing too much could mean the end of the company. But there were also incredible upsides. Every success felt like our success. Moving to a better office was incredibly satisfying, and I got to befriend some truly amazing people. This experience didn't just make me a better developer—it made me a better person.
     `,
     images: ["marketplace.png", "sezame-wework1.jpg"],
     banner: "marketplace.png",
     url: "https://joinsezame.com/",
     languages: ["AWS", "NEXT", "Tailwind"],
   },
-  // {
-  //   name: "Ce portfolio",
-  //   description: "",
-  //   images: [""],
-  // },
+  {
+    name: "Lowback",
+    description: `Lowback is my most ambitious project. With some friend we are building a Backend as a service. I did a lot of research to find the best architecture possible for our need and our usages. And so we use dotnet with a microservice oriented architecture. We created packages and interfaces. I also made the deployement strategy using a VPS with subdomains, httpd, progresql, systemctl services...`,
+    images: ["dotnet.png"],
+    banner: "dotnet.png",
+    languages: [".NET", "NEXT"],
+  },
   {
     name: "Minesweeper",
     description:
@@ -72,7 +85,7 @@ const P: ProjectsType = [
     ],
     banner: "3Dcity1.png",
     videos: ["3Dcity.mp4", "shipSeller.mp4"],
-    languages: ["Three.js", "CSS"]
+    languages: ["Three.js", "CSS"],
   },
   {
     name: "Some random projects",
@@ -98,7 +111,7 @@ const P: ProjectsType = [
     ],
     videos: ["fenetreS.mp4", "Paragraph.mp4", "Pokemon.mp4", "textMaker.mp4"],
     banner: "FenetreS1.png",
-    languages: ["JS", "CSS", "PHP"]
+    languages: ["JS", "CSS", "PHP"],
   },
 ];
 
