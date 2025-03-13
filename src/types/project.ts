@@ -20,5 +20,6 @@ export interface Project {
     | "Tailwind"
     | ".NET"
     | "Neon"
+    | "Basalf"
   )[];
 }

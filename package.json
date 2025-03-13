@@ -15,6 +15,7 @@
     "@mui/material-nextjs": "^6.4.3",
     "@neondatabase/serverless": "^0.10.4",
     "@supabase/supabase-js": "^2.49.1",
+    "basalf": "^1.0.6",
     "lowback-admin-mailer": "^1.0.0",
     "lucide-react": "^0.479.0",
     "mui": "^0.0.1",

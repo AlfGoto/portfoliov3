@@ -97,8 +97,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         >
           <Link
             href={"/" + project.name.toLowerCase().replace(/\s+/g, "-")}
-            passHref
-            target="_blank"
           >
             <Button
               size="small"

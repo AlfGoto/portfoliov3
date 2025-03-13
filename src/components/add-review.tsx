@@ -22,6 +22,7 @@ import {
 import { AddComment as AddCommentIcon } from "@mui/icons-material";
 import addSupabaseReview from "@/lib/supabase-add-review";
 import addVercelReview from "@/lib/neon-add-review";
+import addBasalfReview from "@/lib/basalf-add-review";
 
 interface AddReviewProps {
   projectName: string;
@@ -78,7 +79,6 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
             }),
           }
         );
-
         if (!response.ok) {
           throw new Error("Failed to add review");
         }
@@ -96,6 +96,11 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
         }
       } else if (source === "Vercel") {
         await addVercelReview(author, review, projectName);
+
+        setSuccess(true);
+        handleClose();
+      } else if (source === "Basalf") {
+        await addBasalfReview(author, review, projectName);
 
         setSuccess(true);
         handleClose();
@@ -152,7 +157,7 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
                   label="Source"
                   onChange={handleSourceChange}
                 >
-                  {["AWS", "Supabase", "Vercel"].map((v) => (
+                  {["AWS", "Supabase", "Vercel", "Basalf"].map((v) => (
                     <MenuItem key={v} value={v}>
                       {v}
                     </MenuItem>

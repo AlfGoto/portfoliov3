@@ -7,7 +7,9 @@ const P: ProjectsType = [
     <br><br>One crucial thing about this portfolio is that it will be reviewed by my school to evaluate my skills and determine if I deserve my diploma.<br>The school's instructions weren't particularly clear or precise, which meant I had to interpret them quite a bit. But that actually worked in my favor—it's the kind of challenge that motivates me the most!
     <br><br>To structure my projects, I stored them as an array of objects, ensuring consistency.<br>This way, I only needed to create reusable components and pages, then iterate through the projects to generate them dynamically.<br>It's a simple trick, but it makes things so much easier. For example, the project pages exist solely as dynamic routes based on a variable URL.
     <br><br>Due to school requirements, I had to integrate a backend system, so I came up with an idea: a review system where users could select the platform where their review would be posted.<br>For instance, you could leave a review on AWS or Supabase, and when displayed, it would indicate the source.<br>It's a quirky but fun feature that I really like! It also taught me a lot about Vercel integrations (like Neon), and I quickly built an API using AWS while also incorporating Supabase.
-    <br><br>Additionally, we needed to implement an email contact form.<br>With my friend from LowBack, we developed an admin-only email sender using .NET and an NPM package that works exceptionally well!<br>
+    <br><br>Additionally, we needed to implement an email contact form.<br>With my friend from LowBack, we developed an admin-only email sender using .NET and an NPM package that works exceptionally well!
+    <br><br>Also this is my first time trying SEO. In a lack of luck i have discovered others Alfred Gauthier. Inventors and Resistant. I almost feel bad of trying to be ahead of them in SEO. I learned about sitemap and the google search console.
+    <br><br>I did a figma if you want to see it: <a style="color: blue" href="https://www.figma.com/design/tq04CpzPgfXLXkiTGKfI46/portfolio?node-id=0-1&p=f" target="_blank">Figma</a>
     `,
     images: [
       "banner.png",
@@ -18,7 +20,18 @@ const P: ProjectsType = [
       "review-chose.png",
     ],
     banner: "banner.png",
-    languages: ["AWS", "NEXT", "Mui", "Neon"],
+    languages: ["AWS", "NEXT", "Mui", "Neon", "Basalf"],
+  },
+  {
+    name: "Basalf",
+    description: `Basalf was an answer to a problem i had. In the end of 2024 i was in a pain of using Supabase free tier. It is realy usefull but only let me use 2 projects at once. So i had the idea of creating my own supabase/pocketbase/firebase service. I just wanted a database so i wen for a database as a service.
+    <br><br>I only used NEXT because i wanted to use its api function. For the storage i used mySQL, i wanted to learn how to use it with JS. I also did a <a style="color: blue" href="https://www.npmjs.com/package/basalf" target="_blank">npm package</a> that is a sdk to use basalf easily. 
+    <br><br>Even if this is not a finished project, I'm realy proud of this one, i hope my friends and I will be able to succeed in finishing Lowback, another project of this portfolio that is the spiritual successor of basalf.
+    `,
+    images: ["table.png", "home.png", "npm.png"],
+    banner: "table.png",
+    languages: ["NEXT", "Basalf"],
+    url: "https://basalf.fr/",
   },
   {
     name: "Sezame",
@@ -32,13 +45,6 @@ const P: ProjectsType = [
     banner: "marketplace.png",
     url: "https://joinsezame.com/",
     languages: ["AWS", "NEXT", "Tailwind"],
-  },
-  {
-    name: "Lowback",
-    description: `Lowback is my most ambitious project. With some friend we are building a Backend as a service. I did a lot of research to find the best architecture possible for our need and our usages. And so we use dotnet with a microservice oriented architecture. We created packages and interfaces. I also made the deployement strategy using a VPS with subdomains, httpd, progresql, systemctl services...`,
-    images: ["dotnet.png"],
-    banner: "dotnet.png",
-    languages: [".NET", "NEXT"],
   },
   {
     name: "Minesweeper",
@@ -57,6 +63,13 @@ const P: ProjectsType = [
     banner: "home.png",
     url: "https://3foto.vercel.app/",
     languages: ["AWS", "NEXT", "Tailwind"],
+  },
+  {
+    name: "Lowback",
+    description: `Lowback is my most ambitious project. With some friend we are building a Backend as a service. I did a lot of research to find the best architecture possible for our need and our usages. And so we use dotnet with a microservice oriented architecture. We created packages and interfaces. I also made the deployement strategy using a VPS with subdomains, httpd, progresql, systemctl services...`,
+    images: ["dotnet.png"],
+    banner: "dotnet.png",
+    languages: [".NET", "NEXT"],
   },
   {
     name: "Towalf",

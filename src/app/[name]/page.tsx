@@ -18,13 +18,13 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Comment as CommentIcon } from "@mui/icons-material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-
 import projects from "@/data/projects";
 import { Project } from "@/types/project";
 import { Review } from "@/types/review";
 import AddReviewButton from "@/components/add-review";
 import { createClient } from "@supabase/supabase-js";
 import { neon } from "@neondatabase/serverless";
+import Basalf from "basalf";
 import Gallery from "@/components/image-gallery";
 import VideoGallery from "@/components/video-gallery";
 
@@ -32,8 +32,8 @@ const supabase = createClient(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_KEY!
 );
-
 const sql = neon(process.env.DATABASE_URL!);
+const basalf = new Basalf(process.env.BASALF_KEY);
 
 async function getReviews() {
   const projectArr = projects;
@@ -45,17 +45,18 @@ async function getReviews() {
     })(),
     (async () => {
       const { data: Reviews } = await supabase.from("Reviews").select("*");
-
       if (!Reviews) return;
-
       await addReviewsToProjects(Reviews, projectArr, "Supabase");
     })(),
     (async () => {
       const Reviews = await sql("SELECT * FROM reviews");
-
       if (!Reviews) return;
-
       await addReviewsToProjects(Reviews as Review[], projectArr, "Vercel");
+    })(),
+    (async () => {
+      const { results: Reviews } = await basalf.from("reviews").select();
+      if (!Reviews) return;
+      await addReviewsToProjects(Reviews as Review[], projectArr, "Basalf");
     })(),
   ]);
   return projectArr;
