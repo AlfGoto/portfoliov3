@@ -25,6 +25,8 @@ import { Review } from "@/types/review";
 import AddReviewButton from "@/components/add-review";
 import { createClient } from "@supabase/supabase-js";
 import { neon } from "@neondatabase/serverless";
+import Gallery from "@/components/image-gallery";
+import VideoGallery from "@/components/video-gallery";
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -202,18 +204,39 @@ export default async function ProjectPage({
         <Grid container spacing={4}>
           {/* Project Details */}
           <Grid item xs={12} md={6}>
-            <Paper
-              elevation={2}
-              sx={{ p: { xs: 2, sm: 3 }, height: "100%", borderRadius: 2 }}
-            >
+            <Paper elevation={2} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
               <Typography variant="h4" component="h2" gutterBottom>
                 About this project
               </Typography>
-              <Typography variant="body1" paragraph>
-                {project.description}
-              </Typography>
+              {/* Language tags */}
+              {project.languages && project.languages.length > 0 && (
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{ mt: 2, mb: 2, flexWrap: "wrap", gap: 0 }}
+                >
+                  {project.languages.map((language, index) => (
+                    <Chip
+                      key={index}
+                      label={language}
+                      size="small"
+                      sx={{
+                        height: "24px",
+                        fontSize: "0.75rem",
+                        mb: 0.5,
+                        p: "2px !important",
+                      }}
+                    />
+                  ))}
+                </Stack>
+              )}
+              <Typography
+                variant="body1"
+                paragraph
+                dangerouslySetInnerHTML={{ __html: project.description }}
+              />
 
-              <Box sx={{display: "flex", gap: 3}}>
+              <Box sx={{ display: "flex", gap: 3 }}>
                 {project.url && (
                   <Button
                     variant="contained"
@@ -317,36 +340,14 @@ export default async function ProjectPage({
             </Paper>
           </Grid>
 
-          {/* Project Images */}
-          <Grid item xs={12} md={6}>
-            <Paper elevation={2} sx={{ p: { xs: 2, sm: 3 }, borderRadius: 2 }}>
-              <Typography variant="h4" component="h2" gutterBottom>
-                Gallery
-              </Typography>
-              <Grid container spacing={2} sx={{ mt: 1 }}>
-                {project.images.map((image, index) => (
-                  <Grid item xs={12} sm={6} key={index}>
-                    <Box
-                      sx={{
-                        position: "relative",
-                        paddingTop: "75%", // 4:3 aspect ratio
-                        width: "100%",
-                        borderRadius: 1,
-                        overflow: "hidden",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                      }}
-                    >
-                      <Image
-                        src={`/imgs/${project.name}/${image}`}
-                        alt={`${project.name} image ${index + 1}`}
-                        fill
-                        style={{ objectFit: "cover" }}
-                      />
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </Paper>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ gap: 5, display: "flex", flexDirection: "column" }}
+          >
+            <Gallery project={project} />
+            <VideoGallery project={project} />
           </Grid>
         </Grid>
       </Container>

@@ -53,7 +53,7 @@ export default function ImageCarousel({ images, banner }: ImageCarouselProps) {
       }}
     >
       <Image
-        src={imageToShow || "/placeholder.svg"}
+        src={imageToShow}
         alt="Project preview"
         fill
         style={{

@@ -5,9 +5,11 @@ import {
   Box,
   CardActions,
   Button,
+  Chip,
+  Stack,
 } from "@mui/material";
 import ImageCarousel from "./image-carousel";
-import { Project } from "@/types/project";
+import type { Project } from "@/types/project";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -33,7 +35,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           project.banner ? `/imgs/${project.name}/${project.banner}` : undefined
         }
       />
-      <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 3 }, pb: "5px !important" }}>
+      <CardContent
+        sx={{ flexGrow: 1, p: { xs: 2, sm: 3 }, pb: "5px !important" }}
+      >
         <Typography
           gutterBottom
           variant="h5"
@@ -54,6 +58,29 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             ? cutText(project.description)
             : "Project description coming soon..."}
         </Typography>
+
+        {/* Language tags */}
+        {project.languages && project.languages.length > 0 && (
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{ mt: 2, flexWrap: "wrap", gap: 0 }}
+          >
+            {project.languages.map((language, index) => (
+              <Chip
+                key={index}
+                label={language}
+                size="small"
+                sx={{
+                  height: "24px",
+                  fontSize: "0.75rem",
+                  mb: 0.5,
+                  p: "2px !important",
+                }}
+              />
+            ))}
+          </Stack>
+        )}
       </CardContent>
 
       <Box
