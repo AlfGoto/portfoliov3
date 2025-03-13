@@ -1,3 +1,4 @@
+import projects from "@/data/projects";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -6,13 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = [
     "", // Home
     "cv.pdf",
-    "lowback",
-    "sezame",
-    "minesweeper",
-    "3foto",
-    "towalf",
-    "experiments-on-3d",
-    "some-random-projects",
+    ...projects.map((p) => p.name.toLowerCase().replace(/\s+/g, "-")),
   ];
 
   const lastModified = new Date().toISOString();
