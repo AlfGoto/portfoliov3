@@ -1,5 +1,9 @@
 import type { Project } from "@/types/project";
 
+function a(url: string, title: string) {
+  return `<a style="color: blue" href="${url}" target="_blank">${title}</a>`;
+}
+
 const P: ProjectsType = [
   {
     name: "This portfolio",
@@ -9,7 +13,10 @@ const P: ProjectsType = [
     <br><br>Due to school requirements, I had to integrate a backend system, so I came up with an idea: a review system where users could select the platform where their review would be posted.<br>For instance, you could leave a review on AWS or Supabase, and when displayed, it would indicate the source.<br>It's a quirky but fun feature that I really like! It also taught me a lot about Vercel integrations (like Neon), and I quickly built an API using AWS while also incorporating Supabase.
     <br><br>Additionally, we needed to implement an email contact form.<br>With my friend from LowBack, we developed an admin-only email sender using .NET and an NPM package that works exceptionally well!
     <br><br>Also this is my first time trying SEO. In a lack of luck i have discovered others Alfred Gauthier. Inventors and Resistant. I almost feel bad of trying to be ahead of them in SEO. I learned about sitemap and the google search console.
-    <br><br>I did a figma if you want to see it: <a style="color: blue" href="https://www.figma.com/design/tq04CpzPgfXLXkiTGKfI46/portfolio?node-id=0-1&p=f" target="_blank">Figma</a>
+    <br><br>I did a figma if you want to see it: ${a(
+      "https://www.figma.com/design/tq04CpzPgfXLXkiTGKfI46/portfolio?node-id=0-1&p=f",
+      "Figma"
+    )}
     `,
     images: [
       "banner.png",
@@ -24,9 +31,13 @@ const P: ProjectsType = [
   },
   {
     name: "Basalf",
-    description: `Basalf was an answer to a problem i had. In the end of 2024 i was in a pain of using Supabase free tier. It is realy usefull but only let me use 2 projects at once. So i had the idea of creating my own supabase/pocketbase/firebase service. I just wanted a database so i wen for a database as a service.
-    <br><br>I only used NEXT because i wanted to use its api function. For the storage i used mySQL, i wanted to learn how to use it with JS. I also did a <a style="color: blue" href="https://www.npmjs.com/package/basalf" target="_blank">npm package</a> that is a sdk to use basalf easily. 
-    <br><br>Even if this is not a finished project, I'm realy proud of this one, i hope my friends and I will be able to succeed in finishing Lowback, another project of this portfolio that is the spiritual successor of basalf.
+    description: `Basalf was born out of a problem I faced. At the end of 2024, I struggled with the limitations of Supabase's free tier—an incredibly useful service, but one that restricted me to just two projects at a time. This frustration led me to the idea of building my own Supabase/Pocketbase/Firebase alternative. Since all I really needed was a free serverless database, I focused on creating my own database-as-a-service.
+    <br><br>I chose Next.js primarily for its API functions and opted for MySQL as my storage solution, wanting to deepen my knowledge of using it with JavaScript. To make Basalf easier to use, I also developed an ${a(
+      "https://www.npmjs.com/package/basalf",
+      "NPM package"
+    )}, which serves as an SDK.  
+    <br><br>
+    While this project is not yet complete, I'm genuinely proud of it. I hope my friends and I can successfully bring Lowback—another project in this portfolio and the spiritual successor to Basalf—to life.  
     `,
     images: ["table.png", "home.png", "npm.png"],
     banner: "table.png",
@@ -83,9 +94,15 @@ const P: ProjectsType = [
   {
     name: "Experiments on 3D",
     description: `Since starting my developer journey, i was always curious about 3D. Some 3D websites are just fantastic, so even if i'm not realy a frontend oriented dev, i always loved experimenting with 3D. I did a lot of little experiments and here is two of them. 
-    <br><br>The first one is a 3D portfolio, the concepts is simple and cool. It use CSS and JS and will let you cicle through some projects. I made it Cartoon like with those flashy colors and cloud in the back.<br>You can test it here: <a style="color: blue" href="https://alfolio.netlify.app/" target="_blank">Alfolio</a>
+    <br><br>The first one is a 3D portfolio, the concepts is simple and cool. It use CSS and JS and will let you cicle through some projects. I made it Cartoon like with those flashy colors and cloud in the back.<br>You can test it here: ${a(
+      "https://alfolio.netlify.app/",
+      "Alfolio"
+    )}
     <br><br>The starship one is made using Three.js, it was my first try of this fabulous library. It show a flying starship that you can move with your arrow and ZQSD keys. It also show a big planet revelating star wars style.
-    <br><br>The minecraft house is made using only CSS, it was my first realy 3D try. I discovered randomly that doing 3D on CSS was a thing and i immediatly needed to try it. It made my friends laugh seing this ridiculous minecraft house spinning in a navigator. it is full CSS, I only used JS to make it manualy scrollable.<br>You can test it here: <a style="color: blue" href="https://minecralf.netlify.app/" target="_blank">MinecrALF</a>
+    <br><br>The minecraft house is made using only CSS, it was my first realy 3D try. I discovered randomly that doing 3D on CSS was a thing and i immediatly needed to try it. It made my friends laugh seing this ridiculous minecraft house spinning in a navigator. it is full CSS, I only used JS to make it manualy scrollable.<br>You can test it here: ${a(
+      "https://minecralf.netlify.app/",
+      "MinecrAlf"
+    )}
     `,
     images: [
       "portfolio3D1.png",
@@ -104,7 +121,10 @@ const P: ProjectsType = [
     name: "Some random projects",
     description: `I did all sorts of strange things with my code, i wanted to learn but mainly wanted to have fun coding. This is mainly if you are curious about some little projects.
     <br><br>The first one is a simple but realy visual project. The idea here is to have windows that interact with each other. You can see lines betweens thems, moving them will move the lines and removing/adding a window will remove/add lines.
-    <br><br>The second one was my first try at doing a rogue like game, i used vanilla JS to make  this game where you can fight monsters and level up, all that in a random generated map ! <br>You can test it here: <a style="color: blue" href="https://roguealf.netlify.app/" target="_blank">RogueLike</a>
+    <br><br>The second one was my first try at doing a rogue like game, i used vanilla JS to make  this game where you can fight monsters and level up, all that in a random generated map ! <br>You can test it here: ${a(
+      "https://roguealf.netlify.app/",
+      "RogueLike"
+    )}
     <br><br>The third one is a pokemon project i started, it store in DB what you pokemon are and you can switch maps and start fight with wilds pokemons when walking in high grass. It use high level dom manipulation and animations. It was realy funny to do.
     <br><br>This four one is my first freelance job. The goal here was to be able to upload custom fonts admin side and the user could, with a special link, create a text with this font and then download it. It was a big work of image manipulation. Now that i see the admin side i'm a little bit ashamed of it but it worked well and the customer was happy.`,
     images: [
