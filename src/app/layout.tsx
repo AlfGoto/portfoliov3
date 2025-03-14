@@ -5,6 +5,7 @@ import { Providers } from "@/components/providers";
 import type React from "react"; // Added import for React
 import Script from "next/script";
 import projects from "@/data/projects";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -109,6 +110,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Analytics />
       <Script
         id="json-ld-home"
         type="application/ld+json"
