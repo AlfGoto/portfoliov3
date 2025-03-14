@@ -96,7 +96,7 @@ export const metadata: Metadata = {
       },
       {
         rel: "icon",
-        url: "https://www.google.com/favicon.ico",
+        url: "/pp.ico",
       },
     ],
   },
