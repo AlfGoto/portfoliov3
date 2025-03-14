@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import type React from "react"; // Added import for React
 import Script from "next/script";
+import projects from "@/data/projects";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,8 @@ export const metadata: Metadata = {
     "Alfred Gauthier",
     "Gauthier Alfred",
     "portfolio",
-    "Portfolio"
+    "Portfolio",
+    ...projects.map((p) => p.name),
   ],
   authors: [{ name: "Alfred Gauthier", url: "https://alfredgauthier.com" }],
   creator: "Alfred Gauthier",
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
     telephone: false,
     address: false,
   },
-  metadataBase: new URL("https://alfredgauthier.com"), // Replace with your actual domain
+  metadataBase: new URL("https://alfredgauthier.com"),
   alternates: {
     canonical: "/",
     languages: {
@@ -52,7 +54,7 @@ export const metadata: Metadata = {
     siteName: "Alfred Gauthier Portfolio",
     images: [
       {
-        url: "/hero-bg1.jpg",
+        url: "/pp.jpg",
         width: 1200,
         height: 630,
         alt: "Alfred Gauthier - Full Stack Developer",
@@ -67,7 +69,7 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Alfred Gauthier, Full Stack Developer specialized in AWS, Next.js, and Backend Architecture",
     creator: "@alfgoto",
-    images: ["/hero-bg1.jpg"],
+    images: ["/pp.jpg"],
   },
   robots: {
     index: true,
@@ -83,13 +85,19 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/pp.jpg",
-    shortcut: "/pp.jpg",
-    apple: "/pp.jpg",
-    other: {
-      rel: "apple-touch-icon-precomposed",
-      url: "/pp.jpg",
-    },
+    icon: "/pp.ico",
+    shortcut: "/pp.ico",
+    apple: "/pp.ico",
+    other: [
+      {
+        rel: "apple-touch-icon-precomposed",
+        url: "/pp.ico",
+      },
+      {
+        rel: "icon",
+        url: "https://www.google.com/favicon.ico",
+      },
+    ],
   },
   category: "technology",
 };
