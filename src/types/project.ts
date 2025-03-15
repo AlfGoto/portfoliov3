@@ -8,7 +8,7 @@ export interface Project {
   url?: string;
   reviews?: Review[];
   videos?: string[];
-  languages?: (
+  languages: (
     | "JS"
     | "CSS"
     | "PHP"

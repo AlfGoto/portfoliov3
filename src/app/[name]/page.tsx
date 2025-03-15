@@ -110,6 +110,7 @@ export async function generateMetadata({
   return {
     title: `${project.name} | Project Details`,
     description: project.description.substring(0, 160),
+    keywords: [...project.languages.map((l) => l)],
     openGraph: {
       title: project.name,
       description: project.description.substring(0, 160),
