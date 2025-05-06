@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Grid,
@@ -9,40 +9,40 @@ import {
   IconButton,
   DialogContent,
   Fade,
-} from "@mui/material";
-import { useState, useRef } from "react";
-import { X } from "lucide-react";
-import type { Project } from "@/types/project";
+} from "@mui/material"
+import { useState, useRef } from "react"
+import { X } from "lucide-react"
+import type { Project } from "@/types/project"
 
 export default function VideoGallery({ project }: { project: Project }) {
-  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
 
   const handleVideoClick = (index: number) => {
-    setSelectedVideo(index);
-  };
+    setSelectedVideo(index)
+  }
 
   const handleClose = () => {
-    setSelectedVideo(null);
-  };
+    setSelectedVideo(null)
+  }
 
   const handleMouseEnter = (index: number) => {
     if (videoRefs.current[index]) {
-      videoRefs.current[index]?.play();
+      videoRefs.current[index]?.play()
     }
-  };
+  }
 
   const handleMouseLeave = (index: number) => {
     if (videoRefs.current[index]) {
-      videoRefs.current[index]?.pause();
+      videoRefs.current[index]?.pause()
       if (videoRefs.current[index]) {
-        videoRefs.current[index]!.currentTime = 0;
+        videoRefs.current[index]!.currentTime = 0
       }
     }
-  };
+  }
 
   if (!project.videos || project.videos.length === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -66,7 +66,7 @@ export default function VideoGallery({ project }: { project: Project }) {
               >
                 <video
                   ref={(el) => {
-                    videoRefs.current[index] = el;
+                    videoRefs.current[index] = el
                   }}
                   src={`/imgs/${project.name}/${video}`}
                   muted
@@ -141,5 +141,5 @@ export default function VideoGallery({ project }: { project: Project }) {
         </DialogContent>
       </Dialog>
     </>
-  );
+  )
 }

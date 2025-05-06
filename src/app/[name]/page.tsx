@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import type { Metadata } from "next"
+import Image from "next/image"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 import {
   Box,
   Container,
@@ -14,58 +14,77 @@ import {
   Divider,
   Stack,
   Avatar,
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Comment as CommentIcon } from "@mui/icons-material";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import projects from "@/data/projects";
-import { Project } from "@/types/project";
-import { Review } from "@/types/review";
-import AddReviewButton from "@/components/add-review";
-import { createClient } from "@supabase/supabase-js";
-import { neon } from "@neondatabase/serverless";
-import Basalf from "basalf";
-import Gallery from "@/components/image-gallery";
-import VideoGallery from "@/components/video-gallery";
+} from "@mui/material"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import { Comment as CommentIcon } from "@mui/icons-material"
+import OpenInNewIcon from "@mui/icons-material/OpenInNew"
+import projects from "@/data/projects"
+import { Project } from "@/types/project"
+import { Review } from "@/types/review"
+import AddReviewButton from "@/components/add-review"
+import { createClient } from "@supabase/supabase-js"
+import { neon } from "@neondatabase/serverless"
+import Basalf from "basalf"
+import Gallery from "@/components/image-gallery"
+import VideoGallery from "@/components/video-gallery"
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
-  process.env.SUPABASE_KEY!
-);
-const sql = neon(process.env.DATABASE_URL!);
-const basalf = new Basalf(process.env.BASALF_KEY);
+  process.env.SUPABASE_KEY!,
+)
+const sql = neon(process.env.DATABASE_URL!)
+const basalf = new Basalf(process.env.BASALF_KEY)
 
 async function getReviews() {
-  const projectArr = projects;
+  const projectArr = projects
+
+  function withTimeout<T>(promise: Promise<T>, ms = 5000): Promise<T> {
+    return Promise.race([
+      promise,
+      new Promise<T>((_, reject) =>
+        setTimeout(() => reject(new Error("Timeout")), ms),
+      ),
+    ])
+  }
+
   await Promise.all([
-    (async () => {
-      const res = await fetch(process.env.NEXT_PUBLIC_AWS_ENDPOINT + "/");
-      const json = await res.json();
-      await addReviewsToProjects(json, projectArr, "AWS");
-    })(),
-    (async () => {
-      const { data: Reviews } = await supabase.from("Reviews").select("*");
-      if (!Reviews) return;
-      await addReviewsToProjects(Reviews, projectArr, "Supabase");
-    })(),
-    (async () => {
-      const Reviews = await sql("SELECT * FROM reviews");
-      if (!Reviews) return;
-      await addReviewsToProjects(Reviews as Review[], projectArr, "Vercel");
-    })(),
-    (async () => {
-      const { results: Reviews } = await basalf.from("reviews").select();
-      if (!Reviews) return;
-      await addReviewsToProjects(Reviews as Review[], projectArr, "Basalf");
-    })(),
-  ]);
-  return projectArr;
+    withTimeout(
+      (async () => {
+        const res = await fetch(process.env.NEXT_PUBLIC_AWS_ENDPOINT + "/")
+        const json = await res.json()
+        await addReviewsToProjects(json, projectArr, "AWS")
+      })(),
+    ).catch(() => {}),
+    withTimeout(
+      (async () => {
+        const { data: Reviews } = await supabase.from("Reviews").select("*")
+        if (!Reviews) return
+        await addReviewsToProjects(Reviews, projectArr, "Supabase")
+      })(),
+    ).catch(() => {}),
+    withTimeout(
+      (async () => {
+        const Reviews = await sql("SELECT * FROM reviews")
+        if (!Reviews) return
+        await addReviewsToProjects(Reviews as Review[], projectArr, "Vercel")
+      })(),
+    ).catch(() => {}),
+    withTimeout(
+      (async () => {
+        const { results: Reviews } = await basalf.from("reviews").select()
+        if (!Reviews) return
+        await addReviewsToProjects(Reviews as Review[], projectArr, "Basalf")
+      })(),
+    ).catch(() => {}),
+  ])
+
+  return projectArr
 }
 
 async function addReviewsToProjects(
   reviewsArr: Review[],
   projectArr: Project[],
-  source: string
+  source: string,
 ) {
   return Promise.all(
     reviewsArr.map((review) => {
@@ -74,37 +93,37 @@ async function addReviewsToProjects(
           project.name === review.projectName ||
           project.name === review.projectname
         ) {
-          if (!project.reviews) project.reviews = [];
+          if (!project.reviews) project.reviews = []
 
           // Prevent duplicates by checking if the review already exists
           const isDuplicate = project.reviews.some(
-            (r) => r.review === review.review && r.author === review.author
-          );
+            (r) => r.review === review.review && r.author === review.author,
+          )
 
           if (!isDuplicate) {
-            project.reviews.push({ ...review, source });
+            project.reviews.push({ ...review, source })
           }
         }
-      });
-    })
-  );
+      })
+    }),
+  )
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ name: string }>;
+  params: Promise<{ name: string }>
 }): Promise<Metadata> {
-  const { name } = await params;
+  const { name } = await params
   const project = projects.find(
-    (p) => p.name.toLowerCase().replace(/\s+/g, "-") === name
-  );
+    (p) => p.name.toLowerCase().replace(/\s+/g, "-") === name,
+  )
 
   if (!project) {
     return {
       title: "Project Not Found",
       description: "The requested project could not be found.",
-    };
+    }
   }
 
   return {
@@ -123,23 +142,23 @@ export async function generateMetadata({
       description: project.description.substring(0, 160),
       images: project.banner ? [project.banner] : [],
     },
-  };
+  }
 }
 
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ name: string }>;
+  params: Promise<{ name: string }>
 }) {
   // Find the project by ID (which is the slugified name)
-  const { name } = await params;
-  const P = await getReviews();
+  const { name } = await params
+  const P = await getReviews()
   const project = P.find(
-    (p) => p.name.toLowerCase().replace(/\s+/g, "-") === name
-  );
+    (p) => p.name.toLowerCase().replace(/\s+/g, "-") === name,
+  )
 
-  if (!project) notFound();
-  if (!project.reviews) project.reviews = [];
+  if (!project) notFound()
+  if (!project.reviews) project.reviews = []
 
   return (
     <Box component="main" sx={{ minHeight: "100vh", pb: 8 }}>
@@ -354,5 +373,5 @@ export default async function ProjectPage({
         </Grid>
       </Container>
     </Box>
-  );
+  )
 }
