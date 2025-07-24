@@ -1,6 +1,6 @@
 'use client'
 
-import { useSession } from "next-auth/react"
+import { useAuth } from "@/contexts/AuthContext"
 import { useRouter } from "next/navigation"
 import { useEffect, ReactNode } from "react"
 import { CircularProgress, Box } from "@mui/material"
@@ -11,18 +11,18 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children, fallback }: ProtectedRouteProps) {
-  const { data: session, status } = useSession()
+  const { user, loading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (status === "loading") return // Still loading
+    if (loading) return // Still loading
 
-    if (!session) {
+    if (!user) {
       router.push('/auth/signin')
     }
-  }, [session, status, router])
+  }, [user, loading, router])
 
-  if (status === "loading") {
+  if (loading) {
     return (
       fallback || (
         <Box 
@@ -37,7 +37,7 @@ export default function ProtectedRoute({ children, fallback }: ProtectedRoutePro
     )
   }
 
-  if (!session) {
+  if (!user) {
     return null
   }
 

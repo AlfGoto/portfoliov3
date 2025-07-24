@@ -1,35 +1,86 @@
-import { auth } from "@/lib/auth"
-import { NextResponse } from "next/server"
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
 
-export default auth((req) => {
-  const { nextUrl } = req
-  
-  // Routes protégées - ajouter ici les chemins qui nécessitent une authentification
-  const protectedRoutes = ['/dashboard', '/profile', '/admin']
-  
-  const isProtectedRoute = protectedRoutes.some(route => 
-    nextUrl.pathname.startsWith(route)
+export async function middleware(request: NextRequest) {
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+        },
+      },
+    }
   )
-  
-  // Si l'utilisateur n'est pas authentifié et essaie d'accéder à une route protégée
-  if (isProtectedRoute && !req.auth) {
-    const signInUrl = new URL('/auth/signin', nextUrl.origin)
-    signInUrl.searchParams.set('callbackUrl', nextUrl.href)
-    return NextResponse.redirect(signInUrl)
+
+  // Routes protégées
+  const protectedRoutes = ['/dashboard', '/profile', '/admin']
+  const isProtectedRoute = protectedRoutes.some(route => 
+    request.nextUrl.pathname.startsWith(route)
+  )
+
+  if (isProtectedRoute) {
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    if (!user) {
+      const redirectUrl = new URL('/auth/signin', request.url)
+      redirectUrl.searchParams.set('redirectTo', request.nextUrl.pathname)
+      return NextResponse.redirect(redirectUrl)
+    }
   }
-  
-  return NextResponse.next()
-})
+
+  return response
+}
 
 export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

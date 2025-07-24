@@ -3,7 +3,7 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import React from "react"; // Added import for React
-import SessionProvider from "./SessionProvider";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const theme = createTheme({
   palette: {
@@ -48,11 +48,11 @@ const theme = createTheme({
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
+    <AuthProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}
       </ThemeProvider>
-    </SessionProvider>
+    </AuthProvider>
   );
 }

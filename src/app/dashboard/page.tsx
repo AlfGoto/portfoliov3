@@ -1,7 +1,8 @@
 'use client'
 
-import { useSession } from "next-auth/react"
-import { Container, Typography, Paper, Box, Avatar, Chip } from "@mui/material"
+import { useAuth } from "@/contexts/AuthContext"
+import { Container, Typography, Paper, Box, Avatar, Chip, Button } from "@mui/material"
+import { Logout } from "@mui/icons-material"
 import ProtectedRoute from "@/components/ProtectedRoute"
 
 export default function Dashboard() {
@@ -13,7 +14,7 @@ export default function Dashboard() {
 }
 
 function DashboardContent() {
-  const { data: session } = useSession()
+  const { user, signOut } = useAuth()
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -26,38 +27,56 @@ function DashboardContent() {
           Bienvenue sur votre tableau de bord !
         </Typography>
         
-        {session?.user && (
+        {user && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 2 }}>
             <Avatar 
-              src={session.user.image || undefined}
-              alt={session.user.name || 'User'}
+              src={user.user_metadata?.avatar_url}
+              alt={user.user_metadata?.full_name || user.email || 'User'}
               sx={{ width: 64, height: 64 }}
             />
-            <Box>
+            <Box sx={{ flex: 1 }}>
               <Typography variant="h6">
-                {session.user.name}
+                {user.user_metadata?.full_name || 'Utilisateur'}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {session.user.email}
+                {user.email}
               </Typography>
-              <Chip 
-                label="Connecté" 
-                color="success" 
-                size="small" 
-                sx={{ mt: 1 }}
-              />
+              <Typography variant="caption" color="text.secondary">
+                ID: {user.id}
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                <Chip 
+                  label="Connecté via Google" 
+                  color="success" 
+                  size="small" 
+                />
+              </Box>
             </Box>
+            <Button
+              variant="outlined"
+              startIcon={<Logout />}
+              onClick={signOut}
+              size="small"
+            >
+              Déconnexion
+            </Button>
           </Box>
         )}
       </Paper>
       
       <Paper sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
-          Fonctionnalités protégées
+          Fonctionnalités protégées avec Supabase Auth
         </Typography>
-        <Typography variant="body1">
-          Cette page est protégée par l'authentification. Seuls les utilisateurs 
+        <Typography variant="body1" paragraph>
+          Cette page est protégée par l'authentification Supabase. Seuls les utilisateurs 
           connectés peuvent y accéder.
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          ✅ Authentification Google OAuth<br/>
+          ✅ Sessions sécurisées<br/>
+          ✅ Protection côté client et serveur<br/>
+          ✅ Gestion d'état réactive
         </Typography>
       </Paper>
     </Container>
