@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: "Unexpected server error" },
       { status: 500 }

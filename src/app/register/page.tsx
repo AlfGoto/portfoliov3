@@ -10,12 +10,13 @@ import {
 import Link from "next/link";
 import { registerAction } from "@/app/auth-actions";
 
-export default function RegisterPage({
+export default async function RegisterPage({
   searchParams,
 }: {
-  searchParams?: { error?: string };
+  searchParams: Promise<{ error?: string }>;
 }) {
-  const errorMessage = searchParams?.error ?? null;
+  const params = await searchParams;
+  const errorMessage = params?.error ?? null;
 
   return (
     <Container maxWidth="sm" sx={{ py: { xs: 4, sm: 6, md: 8 } }}>

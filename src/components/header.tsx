@@ -2,7 +2,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { getUserFromCookies } from "@/lib/supabase-server";
 import { logoutAction } from "@/app/auth-actions";

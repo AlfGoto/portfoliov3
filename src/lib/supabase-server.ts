@@ -14,7 +14,6 @@ export async function createSupabaseServerClient(): Promise<SupabaseClient> {
   if (accessToken && refreshToken) {
     // Hydrate session for this request if cookies exist
     // We intentionally ignore the promise since it's ok if tokens are invalid/expired; calls will fail gracefully
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     client.auth.setSession({
       access_token: accessToken,
       refresh_token: refreshToken,

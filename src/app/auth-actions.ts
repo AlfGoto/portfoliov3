@@ -4,8 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase-server";
 
-function setSessionCookies(accessToken: string, refreshToken: string) {
-  const cookieStore = cookies();
+async function setSessionCookies(accessToken: string, refreshToken: string) {
+  const cookieStore = await cookies();
   const isProd = process.env.NODE_ENV === "production";
   cookieStore.set("sb-access-token", accessToken, {
     httpOnly: true,
@@ -37,7 +37,10 @@ export async function loginAction(formData: FormData) {
   if (!data.session) {
     redirect(`/login?error=${encodeURIComponent("No session returned")}`);
   }
-  setSessionCookies(data.session.access_token, data.session.refresh_token);
+  await setSessionCookies(
+    data.session.access_token,
+    data.session.refresh_token
+  );
   redirect("/");
 }
 
@@ -53,7 +56,7 @@ export async function registerAction(formData: FormData) {
 }
 
 export async function logoutAction() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   cookieStore.delete("sb-access-token");
