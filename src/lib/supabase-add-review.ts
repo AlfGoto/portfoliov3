@@ -1,17 +1,12 @@
 "use server";
 
-import { createClient } from "@supabase/supabase-js";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_KEY!
-);
-
-export default async function addReview(
-  author: string,
-  review: string,
-  projectName: string
-) {
+export default async function addReview(review: string, projectName: string) {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.auth.getUser();
+  const email = data.user?.email ?? "anonymous";
+  const author = email.includes("@") ? email.split("@")[0] : email;
   await supabase
     .from("Reviews")
     .insert([{ author, review, projectName }])

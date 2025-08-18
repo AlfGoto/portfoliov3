@@ -26,11 +26,14 @@ import addBasalfReview from "@/lib/basalf-add-review";
 
 interface AddReviewProps {
   projectName: string;
+  isAuthenticated?: boolean;
 }
 
-export default function AddReviewButton({ projectName }: AddReviewProps) {
+export default function AddReviewButton({
+  projectName,
+  isAuthenticated = false,
+}: AddReviewProps) {
   const [open, setOpen] = useState(false);
-  const [author, setAuthor] = useState("");
   const [review, setReview] = useState("");
   const [source, setSource] = useState("AWS");
   const [loading, setLoading] = useState(false);
@@ -43,7 +46,6 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
 
   const handleClose = () => {
     setOpen(false);
-    setAuthor("");
     setReview("");
     setSource("AWS");
   };
@@ -55,7 +57,7 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!author.trim() || !review.trim()) {
+    if (!review.trim()) {
       setError("Please fill in all fields");
       return;
     }
@@ -65,20 +67,11 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
 
     try {
       if (source === "AWS") {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_AWS_ENDPOINT + "/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              author,
-              review,
-              projectName,
-            }),
-          }
-        );
+        const response = await fetch("/api/reviews/aws", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ review, projectName }),
+        });
         if (!response.ok) {
           throw new Error("Failed to add review");
         }
@@ -86,7 +79,7 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
         handleClose();
       } else if (source === "Supabase") {
         try {
-          await addSupabaseReview(author, review, projectName);
+          await addSupabaseReview(review, projectName);
 
           setSuccess(true);
           handleClose();
@@ -95,12 +88,12 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
           throw new Error("Failed to add review");
         }
       } else if (source === "Vercel") {
-        await addVercelReview(author, review, projectName);
+        await addVercelReview(review, projectName);
 
         setSuccess(true);
         handleClose();
       } else if (source === "Basalf") {
-        await addBasalfReview(author, review, projectName);
+        await addBasalfReview(review, projectName);
 
         setSuccess(true);
         handleClose();
@@ -119,6 +112,10 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
         color="primary"
         startIcon={<AddCommentIcon />}
         onClick={handleClickOpen}
+        disabled={!isAuthenticated}
+        title={
+          !isAuthenticated ? "You must be logged in to add a review" : undefined
+        }
         sx={{
           borderRadius: 2,
           textTransform: "none",
@@ -137,16 +134,7 @@ export default function AddReviewButton({ projectName }: AddReviewProps) {
             <Box
               sx={{ display: "flex", flexDirection: "column", gap: 2, pt: 1 }}
             >
-              <TextField
-                label="Your Name"
-                variant="outlined"
-                fullWidth
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                required
-                autoFocus
-                error={!!error && !author.trim()}
-              />
+              {/* Name removed: author will be derived server-side from user email */}
 
               <FormControl fullWidth required>
                 <InputLabel id="review-source-label">Source</InputLabel>

@@ -6,6 +6,7 @@ import type React from "react"; // Added import for React
 import Script from "next/script";
 import projects from "@/data/projects";
 import { Analytics } from "@vercel/analytics/react";
+import Header from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -129,6 +130,7 @@ export default function RootLayout({
         }}
       />
       <body className={inter.className}>
+        <Header />
         <Providers>{children}</Providers>
       </body>
     </html>
