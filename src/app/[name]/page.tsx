@@ -130,7 +130,18 @@ export async function generateMetadata({
   return {
     title: `${project.name} | Project Details`,
     description: project.description.substring(0, 160),
-    keywords: [...project.languages.map((l) => l)],
+    keywords: [
+      ...project.languages.map((l) => l),
+      project.name,
+      "Alfred Gauthier",
+      "Gauthier Alfred",
+      "Alfred Gauthier Portfolio",
+      "Alfred",
+      "Gauthier",
+    ],
+    authors: [{ name: "Alfred Gauthier", url: "https://alfredgauthier.com" }],
+    creator: "Alfred Gauthier",
+    publisher: "Alfred Gauthier",
     openGraph: {
       title: project.name,
       description: project.description.substring(0, 160),
